@@ -1,35 +1,26 @@
 {
   "name": "tummy_companion",
+  "contributors": [
+    {
+      "name": "Konstantin Kuklin",
+      "email": "konstantin.kuklin@student.htw-berlin.de",
+      "url": "https://github.com/coderanian"
+    },
+    {
+      "name": "Zaynab Ammar",
+      "email": "zaynab.ammar@student.htw-berlin.de",
+      "url": "https://github.com/zaynabammar"
+    }
+  ],
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "cra-template": "1.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-scripts": "5.0.1"
-  },
+  "workspaces": ["frontend", "backend"],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start:frontend": "npm --workspace frontend start",
+    "start:backend": "npm --workspace backend start",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "concurrently": "^7.0.0"
   }
 }
