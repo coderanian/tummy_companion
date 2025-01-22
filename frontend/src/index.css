@@ -38,3 +38,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.react-calendar__navigation,
+.react-calendar__month-view__weekdays {
+  @apply bg-primary text-center p-1;
+}
+.react-calendar__month-view__weekdays {
+  @apply border-b-2 border-black mb-3;
+}
+.react-calendar__navigation {
+  @apply flex items-center justify-between px-5 hover:text-secondary;
+}
+
+
+

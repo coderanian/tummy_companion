@@ -6,4 +6,5 @@
  */
 export {default as Dashboard} from './Dashboard';
 export {default as Diary} from './Diary';
+export {default as DiaryEntry} from './DiaryEntry';
 export {default as Root} from '../Portal';

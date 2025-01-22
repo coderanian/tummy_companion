@@ -33,7 +33,7 @@ const SidebarNavigation = () => {
 
             {/* Sidebar */}
             {isVisible && (
-                <nav className="bg-primary h-screen p-10 w-72">
+                <nav className="bg-primary h-screen p-10 w-72 border-r-2 border-black">
                     <aside className="text-xl font-garet-heavy">
                         {/* Close Button */}
                         <div className="relative">
@@ -52,7 +52,7 @@ const SidebarNavigation = () => {
                         {/* Navigation Links */}
                         <div className="flex pt-8 flex-col items-start space-y-5">
                             <NavLink
-                                to="/"
+                                to="/dashboard"
                                 className={({ isActive }) =>
                                     `flex items-center space-x-2 ${isActive ? "text-secondary" : ""}`
                                 }
@@ -78,7 +78,7 @@ const SidebarNavigation = () => {
                                 <QuestionMarkCircleIcon className="h-5 w-5" />
                                 <span>About IBS</span>
                             </NavLink>
-                            <div className="flex items-center space-x-2 hover:cursor-custom-pointer" onClick={handleLogout}>
+                            <div className="flex items-center space-x-2 hover:cursor-custom-pointer hover:text-secondary" onClick={handleLogout}>
                                 <ArrowLeftStartOnRectangleIcon className="h-5 w-5" />
                                 <span>Logout</span>
                             </div>

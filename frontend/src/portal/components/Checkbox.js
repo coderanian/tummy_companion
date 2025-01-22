@@ -7,13 +7,13 @@ function Checkbox({text, onChange}) {
     };
 
     return (
-        <div className="flex items-center ml-5">
+        <div className="flex items-center">
             <input type="checkbox"
                    id="option"
                    className="w-5 h-5 accent-primary bg-primary cursor-custom-pointer border-black"
                    onClick={handleChange}
             />
-            <label htmlFor="option" className="ml-2 text-sm">
+            <label htmlFor="option" className="ml-2">
                 {text}
             </label>
         </div>
