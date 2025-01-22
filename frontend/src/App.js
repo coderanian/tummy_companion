@@ -20,6 +20,7 @@ function App() {
                 <Route element={<Portal.Root/>}>
                     <Route path="/dashboard" element={<Portal.Dashboard/>}/>
                     <Route path="/diary" element={<Portal.Diary/>}/>
+                    <Route path="/diary/new-entry" element={<Portal.DiaryEntry/>}/>
                 </Route>
             </Routes>
         </div>

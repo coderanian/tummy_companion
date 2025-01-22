@@ -14,7 +14,10 @@
   ],
   "version": "0.1.0",
   "private": true,
-  "workspaces": ["frontend", "backend"],
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "start:frontend": "npm --workspace frontend start",
     "start:backend": "npm --workspace backend start",
