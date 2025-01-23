@@ -1,6 +1,8 @@
 # Tummy Companion
 Webclicent application for IBS management "Tummy Companion". Created as a semester project for HTW Berlin Web Technologies course in my Masters studies.
 
+
+
 This project was bootstrapped with following libraries:
 - @heroicons/react: Provides scalable and accessible icon components.
 - email-validator: Lightweight utility for validating email formats.
@@ -40,6 +42,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 ### `npm start:backendend`
 
 Launches the Node.js sever on port 8080. Running MongoDB instance required for server to work.
+
+## Structure
+1. Homepage: user registration and login
+![image](https://github.com/user-attachments/assets/e8f7e789-bd89-4557-93b1-8a29ad1f2ba2)
+2. Portal: access to diary overview, extraction and entry creation as well as dashboard for data visualization.
+![image](https://github.com/user-attachments/assets/245e2095-ba1a-43a7-bbf1-26b005f60db9)
 
 ## Login Workflow
 1. Login: User provides email and password.
