@@ -4,6 +4,8 @@ export const CONSTANTS = {
         LOGIN: "/api/login",
         REGISTER: "/api/register",
         DIARY: "/api/diary",
+        NEW_DIARY_ENTRY: "/api/diary/new",
+        UPDATE_DIARY_ENTRY: "/api/diary/:id",
         LOGOUT: "api/logout"
     },
     WELCOME_NAV: ['faq', 'about', 'signup', 'login'],

@@ -10,6 +10,10 @@ export function requestFactory(endpoint, body=null, from=null, to=null) {
             return fetchDiary(endpoint, from, to);
         case CONSTANTS.API.LOGOUT:
             return logout(endpoint);
+        case CONSTANTS.API.NEW_DIARY_ENTRY:
+            return createNewDiaryEntry(endpoint, body);
+        case CONSTANTS.API.UPDATE_DIARY_ENTRY:
+            return updateDiaryEntry(endpoint, body);
         default:
             return alert("Unknown endpoint, please contact us if this error persists!");
     }
@@ -78,13 +82,57 @@ async function fetchDiary(url, from, to) {
             }
         );
         const data = await response.json();
-        console.log(data);
         if(response.status === 404 || response.ok) {
             return  {success: true, response: data};
         }
         return {success: false, response: data.message};
     } else {
         return {success: false, response: "Token expired, please login again!"};
+    }
+}
+
+async function createNewDiaryEntry(url, body) {
+    url = '/api/diary';
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(body)
+        });
+        const data = await response.json();
+        console.log(data);
+        if(response.ok) {
+            return {success: true, response: null};
+        } else {
+            return {success: false, response: data.message};
+        }
+    } catch (err) {
+        return {success: false, response: "Error creating new entry: " + err.message};
+    }
+}
+
+async function updateDiaryEntry(url, body) {
+    const updatedUrl = `/api/diary/${body._id}`;
+    try {
+        const response = await fetch(updatedUrl, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(body.body)
+        });
+        const data = await response.json();
+        if(response.ok) {
+            return {success: true, response: null};
+        } else {
+            return {success: false, response: data.message};
+        }
+    } catch (err) {
+        return {success: false, response: "Error creating new entry: " + err.message};
     }
 }
 

@@ -7,27 +7,31 @@ import Flatulence from "../../assets/images/elements/stomach_flatulence.svg";
 import {ErrorBox} from "../../homepage/components";
 import {requestFactory} from "../../common/utils";
 import {CONSTANTS} from "../../common/constants";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useLocation, useNavigate} from "react-router-dom";
 
-const DiaryEntry = () => {
+const DiaryEntryEdit = () => {
+    const location = useLocation();
+    const entry = location.state?.entry;
     //Input states
-    const [timestamp, setDate] = useState(new Date().toISOString().split('T')[0]);
-    const [mood_scale, setWellbeing] = useState(3);
-    const [sleep_quality_scale, setSleepQuality] = useState(3);
-    const [sleep_duration_length, setSleepDuration] = useState(6);
-    const [stool_consistency_scale, setStoolConsistency] = useState(2);
-    const [stool_quantity_scale, setStoolQuantity] = useState(2);
-    const [stool_blood, setStoolBlood] = useState(false);
-    const [stool_mucus, setStoolMucus] = useState(false);
-    const [stool_urgency, setStooUrgency] = useState(false);
-    const [stomach_pain, setStomachPain] = useState(false);
-    const [stomach_bloating, setStomachBloating] = useState(false);
-    const [stomach_flatulence, setFlatulence] = useState(false);
-    const [food, setSelectedFoods] = useState([]);
-    const [drink, setSelectedDrinks] = useState([]);
-    // Intake section togglers
+    const [timestamp, setDate] = useState(new Date(entry.timestamp).toISOString().split('T')[0]);
+    const [mood_scale, setWellbeing] = useState(entry.mood_scale);
+    const [sleep_quality_scale, setSleepQuality] = useState(entry.sleep_quality_scale);
+    const [sleep_duration_length, setSleepDuration] = useState(entry.sleep_duration_length);
+    const [stool_consistency_scale, setStoolConsistency] = useState(entry.stool_consistency_scale);
+    const [stool_quantity_scale, setStoolQuantity] = useState(entry.stool_quantity_scale);
+    const [stool_blood, setStoolBlood] = useState(entry.stool_blood);
+    const [stool_mucus, setStoolMucus] = useState(entry.stool_mucus);
+    const [stool_urgency, setStooUrgency] = useState(entry.stool_urgency);
+    const [stomach_pain, setStomachPain] = useState(entry.stomach_pain);
+    const [stomach_bloating, setStomachBloating] = useState(entry.stomach_bloating);
+    const [stomach_flatulence, setFlatulence] = useState(entry.stomach_flatulence);
+    const [food, setSelectedFoods] = useState(entry.food);
+    const [drink, setSelectedDrinks] = useState(entry.drink);
     const [showFoods, setShowFoods] = useState(false);
     const [showDrinks, setShowDrinks] = useState(false);
+    const [formFeedback, setFormFeedback] = useState(null);
+    const navigate = useNavigate();
+
     const toggleItem = (array, setArray, value) => {
         setArray(prev =>
             prev.includes(value)
@@ -35,22 +39,21 @@ const DiaryEntry = () => {
                 : [...prev, value]
         );
     };
-    const [formFeedback, setFormFeedback] = useState(null);
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            timestamp, mood_scale, sleep_quality_scale, sleep_duration_length, stool_consistency_scale,
-            stool_quantity_scale, stool_mucus, stool_blood, stool_urgency, stomach_pain,
-            stomach_bloating, stomach_flatulence, food, drink,
+            _id: entry._id,
+            body: {
+                timestamp, mood_scale, sleep_quality_scale, sleep_duration_length, stool_consistency_scale,
+                stool_quantity_scale, stool_mucus, stool_blood, stool_urgency, stomach_pain,
+                stomach_bloating, stomach_flatulence, food, drink,
+            }
         };
-        console.log("Submitting data:", data);
-        const response = await requestFactory(CONSTANTS.API.NEW_DIARY_ENTRY, data);
-        console.log("Received response:", response);
+        const response = await requestFactory(CONSTANTS.API.UPDATE_DIARY_ENTRY, data);
         if (response.success) {
             setFormFeedback(null);
-            alert("New diary entry created for: " + timestamp);
+            alert("Diary entry updated for: " + timestamp);
             navigate("/diary");
         } else {
             setFormFeedback(response.msg);
@@ -139,7 +142,8 @@ const DiaryEntry = () => {
                             <h2 className="text-xl font-garet-heavy underline">3. Stomach issues</h2>
                             <p className="pb-3">Did you notice any of the following problems with your stomach?</p>
                             <div className="flex justify-between">
-                                <div className={`flex flex-col space-y-3 items-center border-2 rounded-lg border-black p-5 hover:text-secondary hover:border-secondary hover:border-3 ${stomach_pain && "bg-secondary text-primary"}`}>
+                                <div
+                                    className={`flex flex-col space-y-3 items-center border-2 rounded-lg border-black p-5 hover:text-secondary hover:border-secondary hover:border-3 ${stomach_pain && "bg-secondary text-primary"}`}>
                                     <img src={StomachPain}
                                          alt="Person with stomach pain"
                                          className="max-w-[200px] hover:cursor-custom-pointer"
@@ -147,7 +151,8 @@ const DiaryEntry = () => {
                                     />
                                     <p className="text-start font-garet-heavy text-lg">Pain</p>
                                 </div>
-                                <div className={`flex flex-col space-y-3 items-center border-2 rounded-lg border-black p-5 hover:text-secondary hover:border-secondary hover:border-3 ${stomach_bloating && "bg-secondary text-primary"}`}>
+                                <div
+                                    className={`flex flex-col space-y-3 items-center border-2 rounded-lg border-black p-5 hover:text-secondary hover:border-secondary hover:border-3 ${stomach_bloating && "bg-secondary text-primary"}`}>
                                     <img src={StomachBloating}
                                          alt="Bloated stomach"
                                          className="max-w-[200px] hover:cursor-custom-pointer"
@@ -155,7 +160,8 @@ const DiaryEntry = () => {
                                     />
                                     <p className="text-start font-garet-heavy text-lg">Bloating</p>
                                 </div>
-                                <div className={`flex flex-col space-y-3 items-center border-2 rounded-lg border-black p-5 hover:text-secondary hover:border-secondary hover:border-3 ${stomach_flatulence && "bg-secondary text-primary"}`}>
+                                <div
+                                    className={`flex flex-col space-y-3 items-center border-2 rounded-lg border-black p-5 hover:text-secondary hover:border-secondary hover:border-3 ${stomach_flatulence && "bg-secondary text-primary"}`}>
                                     <img src={Flatulence}
                                          alt="Person with flatulence"
                                          className="max-w-[200px] hover:cursor-custom-pointer"
@@ -229,7 +235,7 @@ const DiaryEntry = () => {
                             type="submit"
                             className="w-full bg-primary p-3 text-lg font-garet-heavy rounded-lg hover:bg-secondary hover:text-primary cursor-custom-pointer"
                         >
-                            Save Entry for {timestamp}
+                            Update Entry for {timestamp}
                         </button>
                         {formFeedback && <ErrorBox text={formFeedback}/>}
                     </form>
@@ -239,4 +245,4 @@ const DiaryEntry = () => {
     )
 }
 
-export default DiaryEntry;
+export default DiaryEntryEdit;

@@ -11,7 +11,6 @@ const Dashboard = () => {
             const response = await requestFactory(CONSTANTS.API.DIARY);
             setUserData(response);
             setLoading(false);
-            console.log(userData);
         }
         fetchUserData();
     }, []);
