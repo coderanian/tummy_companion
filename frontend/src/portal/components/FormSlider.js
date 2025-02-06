@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import {QuestionMarkCircleIcon} from "@heroicons/react/16/solid";
 
-const FormSlider = ({title, text, value, setValue, defaultValue, stepSize, min, max, selection, description}) => {
+const FormSlider = ({title, text, value, setValue, stepSize, min, max, selection, description}) => {
     const [showExplanation, setShowExplanation] = useState(false);
 
     const normalizeValue = (value) => {
         return Math.floor(((value + 1 - min) / (max - min)) * 95);
     }
-    console.log(normalizeValue(value));
     return (
         <div>
             <div
@@ -22,7 +21,6 @@ const FormSlider = ({title, text, value, setValue, defaultValue, stepSize, min, 
                 <div className="relative pt-2 pb-6">
                     <input
                         type="range"
-                        defaultValue={defaultValue}
                         min={min}
                         max={max}
                         step={stepSize}

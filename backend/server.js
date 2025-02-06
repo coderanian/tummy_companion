@@ -138,23 +138,19 @@ const authenticateToken = (req, res, next) => {
 };
 
 //Diary_entry Post
-app.post('/api/diary', async (req, res) => {
-    //console.log("POST /diary_entry hit");
+app.post('/api/diary', authenticateToken, async (req, res) => {
+    console.log("Test");
     try {
         const {
-            email, timestamp, mood_scale, sleep_quality_scale, sleep_duration_length, stool_consistency_scale,
+            timestamp, mood_scale, sleep_quality_scale, sleep_duration_length, stool_consistency_scale,
             stool_quantity_scale, stool_mucus, stool_blood, stool_urgency, stomach_pain, stomach_bloating,
             stomach_flatulence, food, drink
         } = req.body;
-
-        const user = await User.findOne({email: email});
-        if (!user) {
-            return res.status(400).json({message: 'User not found. Please register the user first.'});
-        }
-
+        console.log(req.body);
+        const user_id = req.user.user_id
 
         const newDiaryEntry = new DiaryEntry({
-            user_id: user._id,
+            user_id: user_id,
             timestamp,
             mood_scale,
             sleep_quality_scale,
@@ -173,6 +169,8 @@ app.post('/api/diary', async (req, res) => {
 
         await newDiaryEntry.save();
 
+        console.log("New diary entry created: ", newDiaryEntry);
+
         res.status(201).json({
             message: 'Diary entry created successfully',
             data: newDiaryEntry,
@@ -187,13 +185,37 @@ app.post('/api/diary', async (req, res) => {
     }
 });
 
+//Update Diary
+app.put('/api/diary/:id', authenticateToken, async (req, res) => {
+    try {
+        const diaryId = req.params.id;
+        const updates = req.body;
+        const diaryEntry = await DiaryEntry.findById(diaryId);
+
+        if (!diaryEntry) {
+            return res.status(404).json({ message: 'Diary entry not found' });
+        }
+
+        if (!diaryEntry.user_id) {
+            return res.status(400).json({ message: 'Diary entry does not have a valid userId' });
+        }
+
+        const updatedEntry = await DiaryEntry.findByIdAndUpdate(diaryId, updates, {
+            new: true,
+            runValidators: true,
+        });
+
+        res.status(200).json(updatedEntry);
+    } catch (error) {
+        console.error('Error updating diary entry:', error);
+        res.status(500).json({ message: 'Failed to update diary entry', error: error.message });
+    }
+});
 
 //Diary_Entry Get
 app.get('/api/diary', authenticateToken, async (req, res) => {
     try {
         const {from, to} = req.query;
-
-
         if (!from || !to) {
             return res.status(400).json({message: 'Please provide both "from" and "to" date parameters.'});
         }
@@ -217,7 +239,6 @@ app.get('/api/diary', authenticateToken, async (req, res) => {
         const diaryEntries = await DiaryEntry.find(filter).populate('user_id', 'name email');
 
         if (!diaryEntries.length) {
-            console.log(req.user.user_id);
             return res.status(404).json({
                 user: user_name,
                 message: 'No diary entries found for the specified user and date range.'

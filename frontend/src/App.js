@@ -21,6 +21,9 @@ function App() {
                     <Route path="/dashboard" element={<Portal.Dashboard/>}/>
                     <Route path="/diary" element={<Portal.Diary/>}/>
                     <Route path="/diary/new-entry" element={<Portal.DiaryEntry/>}/>
+                    <Route path="/diary/entry/" element={<Portal.DiaryEntryDetails/>}/>
+                    <Route path="/diary/entry/edit" element={<Portal.DiaryEntryEdit/>}/>
+                    <Route path="/about-ibs" element={<Portal.AboutIbs/>}/>
                 </Route>
             </Routes>
         </div>
