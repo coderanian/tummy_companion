@@ -11,14 +11,18 @@ import {CONSTANTS} from "../../common/constants";
  * It handles input changes and form submission for authentication.
  * @author Konstantin Kuklin konstantin.kuklin@student.htw-berlin.de
  */
-const Login = () => {
+const Reset = () => {
     const [email, setEmail] = useState(null);
+    const [lastThreeChars, setLastThreeChars] = useState(null);
     const [password, setPassword] = useState(null);
     const [formFeedback, setFormFeedback] = useState(null);
     const navigate = useNavigate();
 
     const handleEmailInputChange = (value) => {
         setEmail(value);
+    }
+    const handleThreeChartsInputChange = (value) => {
+        setLastThreeChars(value);
     }
     const handlePasswordInputChange = (value) => {
         setPassword(value);
@@ -27,12 +31,13 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (email && password) {
+        if (email && password && lastThreeChars.length === 3) {
             setFormFeedback(null);
-            const data = {email: email, password: password}
-            const response = await requestFactory(CONSTANTS.API.LOGIN, data);
+            const data = {email: email, newPassword: password, lastThreeChars: lastThreeChars}
+            const response = await requestFactory(CONSTANTS.API.RESET, data);
             if (response.success) {
-                navigate("/dashboard");
+                alert("Password reset successful!");
+                navigate("/login");
             } else {
                 setFormFeedback(response.msg);
             }
@@ -50,36 +55,32 @@ const Login = () => {
             />
             <div className="flex flex-col items-center mx-8 mt-32 w-1/2 z-10 space-y-8">
                 <h1 className="text-5xl font-garet-heavy">Login</h1>
-                <p className="text-2xl  mt-5">Login to access your account</p>
+                <p className="text-2xl  mt-5">Reset your password</p>
                 <form className="w-1/2 space-y-5">
                     <Input text={"Email"}
                            onChange={handleEmailInputChange}
                            value={email}
                     />
-                    <Input text={"Password"}
+                    <Input text={"Last three characters of old password"}
+                           onChange={handleThreeChartsInputChange}
+                           type="password"
+                    />
+
+                    <Input text={"New password"}
                            onChange={handlePasswordInputChange}
                            value={password}
                            type="password"
                     />
                     <Button onClickFunction={handleSubmit}
-                            text="Login"
+                            text="Reset password"
                             color="secondary"
                     />
                     {formFeedback && <ErrorBox text={formFeedback}/>}
                 </form>
-                <p>Don't have an account?{" "}
-                    <Link to="/signup" className="text-secondary">
-                        Register
-                    </Link>
-                </p>
-                <p>Forgot your password?{" "}
-                    <Link to="/reset" className="text-secondary">
-                        Reset
-                    </Link>
-                </p>
+                <p className="w-1/2 text-center">If you don't remember last three characters of your old password, please contact us.</p>
             </div>
         </div>
     );
 };
 
-export default Login;
+export default Reset;

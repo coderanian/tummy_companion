@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {CONSTANTS} from "../../common/constants";
 import {requestFactory} from "../../common/utils";
+import {ChartBar} from "../components";
 
 const Dashboard = () => {
     const [userData, setUserData] = useState(null);
@@ -18,6 +19,7 @@ const Dashboard = () => {
     return (
         <div>
             {loading && <div className="text-2xl">Loading...</div>}
+            {!loading && <ChartBar/>}
         </div>
     );
 };

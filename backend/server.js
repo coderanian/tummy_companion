@@ -115,6 +115,38 @@ app.put('/api/user/:user_id', async (req, res) => {
 });
 
 
+app.post('/api/reset-password-direct', async (req, res) => {
+    try {
+        const { email, newPassword, lastThreeChars } = req.body;
+
+        if (!email || !newPassword || !lastThreeChars) {
+            return res.status(400).json({ message: 'Email, last three characters of old password and new password are required.' });
+        }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const lastThreeCharsOfOldPassword = user.password.slice(-3);
+        //if (lastThreeChars !== lastThreeCharsOfOldPassword) {
+        //    return res.status(401).json({ message: 'Invalid last three characters of old password.' });
+        //}
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        user.password = hashedPassword;
+
+        await user.save();
+
+        res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.error('Error resetting password:', error);
+        res.status(500).json({ message: 'An error occurred while resetting the password', error: error.message });
+    }
+});
+
 // Log Out
 app.post('/api/logout', (req, res) => {
 
