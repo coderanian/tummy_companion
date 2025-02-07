@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import {requestFactory} from "../../common/utils";
 import {CONSTANTS} from "../../common/constants";
 import {PlusIcon, ArrowDownTrayIcon, EyeIcon, Cog6ToothIcon} from "@heroicons/react/16/solid";
 import Person from "../../assets/images/elements/person_diary.svg";
-import {Button, DiaryCalendar} from "../components";
+import {Button, ButtonDiaryToPDF, DiaryCalendar} from "../components";
 import {useNavigate} from "react-router-dom";
+import {symptomsBuilder} from "../utils/utils";
 
 
 const Diary = () => {
@@ -37,20 +38,6 @@ const Diary = () => {
         setEntries(response.response);
     }
 
-    const symptomsBuilder = (entry) => {
-        let symptoms = [];
-        if (entry.mood_scale < 3) symptoms.push("Bad mood");
-        if (entry.sleep_quality_scale < 3 || entry.sleep_duration_length < 6) symptoms.push("Bad sleep");
-        if (entry.stool_consistency_scale === 3
-            || entry.stool_quantity_scale === 3
-            || entry.stool_urgency
-            || entry.stool_mucus
-            || entry.stool_blood
-        ) symptoms.push("Stool issues");
-        if (entry.stomach_pain || entry.stomach_bloating || entry.stomach_flatulence) symptoms.push("Stomach issues");
-        return symptoms.length === 0 ? "None" : symptoms.join(", ");
-    }
-
     return (
         <div className="mx-auto space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -62,10 +49,12 @@ const Diary = () => {
                             <h2 className="text-lg font-garet-heavy">Daily Entries</h2>
                             <p>{selectedDate[0].toDateString()} - {selectedDate[1].toDateString()}</p>
                         </div>
-                        <Button onClickFunction={handleNewEntryButtonClick}
-                                icon={PlusIcon}
-                                text="New entry"
-                        />
+                        <div className="flex space-x-4">
+                            <ButtonDiaryToPDF data={entries}/>
+                            <Button onClickFunction={handleNewEntryButtonClick}
+                                    icon={PlusIcon}
+                            />
+                        </div>
                     </div>
                     {/* Entries */}
                     <div className="p-4 rounded-b-lg h-full">
