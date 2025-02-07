@@ -14,6 +14,8 @@ export function requestFactory(endpoint, body=null, from=null, to=null) {
             return createNewDiaryEntry(endpoint, body);
         case CONSTANTS.API.UPDATE_DIARY_ENTRY:
             return updateDiaryEntry(endpoint, body);
+        case CONSTANTS.API.RESET:
+            return updatePassword(endpoint, body);
         default:
             return alert("Unknown endpoint, please contact us if this error persists!");
     }
@@ -151,6 +153,19 @@ async function logout(url) {
     }
 }
 
+async function updatePassword(url, body) {
+    try {
+        const response = await fetch(url, setRequestBody("POST", body));
+        const data = await response.json();
+        if(response.ok) {
+            return {success: true, response: data.message};
+        } else {
+            return {success: false, response: data.message};
+        }
+    } catch (err) {
+        return {success: false, response: "Error resetting password: " + err.message};
+    }
+}
 function setRequestBody(method, body) {
     return {
         method: method,

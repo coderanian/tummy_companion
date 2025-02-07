@@ -14,6 +14,7 @@ function App() {
                     <Route path="/faq" element={<Homepage.Help/>}/>
                     <Route path="/signup" element={<Homepage.Signup/>}/>
                     <Route path="/login" element={<Homepage.Login/>}/>
+                    <Route path="/reset" element={<Homepage.Reset/>}/>
                     <Route path="/about" element={<Homepage.About/>}/>
                 </Route>
                 {/* User Portal Routes */}

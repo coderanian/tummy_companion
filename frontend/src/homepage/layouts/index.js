@@ -9,4 +9,5 @@ export {default as Help} from './Help';
 export {default as About} from './About';
 export {default as Login} from './Login';
 export {default as Signup} from './Signup';
+export {default as Reset} from './Reset';
 export {default as Root} from '../Homepage';
