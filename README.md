@@ -12,6 +12,9 @@ Frontend:
 - react-scripts: Core tools for React app development.
 - tailwind-scrollbar: Customizes scrollbars for better UI consistency.
 - zxcvbn: Estimates password strength to enhance user security.
+- chart.js + react-chart-js: lightweight chart library for data visualization
+- jspdf: PDF creation for diary extraction
+- jspdf-autotable: Map diary data to table for extraction
 
 Backend:
 - Express: Used to create the API server and handle HTTP requests/responses.
