@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import zxcvbn from "zxcvbn";
 import emailValidator from "email-validator";
 import Person from "../../assets/images/elements/person_work_green.svg";
-import {Button, ErrorBox, Input, Navigation} from "../components";
+import {Button, ErrorBox, Input} from "../components";
 import {requestFactory} from "../../common/utils";
 import {CONSTANTS} from "../../common/constants";
 import {useNavigate} from "react-router-dom";
@@ -44,6 +44,7 @@ const Signup = () => {
             const response = await requestFactory(CONSTANTS.API.REGISTER, data);
             console.log(response);
             if (response.success) {
+                alert(response.msg);
                 navigate("/login");
             } else {
                 setFormFeedback(response.msg);
@@ -64,7 +65,7 @@ const Signup = () => {
             <img
                 src={Person}
                 alt="Person with stomach ache."
-                className="absolute bottom-[-335px] left-[-50px] h-full"
+                className="absolute bottom-[-285px] left-[-50px] h-full"
             />
             <div className="flex flex-col items-center mx-8 mt-32 w-1/2 z-10 space-y-8">
                 <h1 className="text-5xl font-garet-heavy">Sign up</h1>

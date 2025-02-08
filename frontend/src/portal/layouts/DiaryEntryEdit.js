@@ -61,7 +61,7 @@ const DiaryEntryEdit = () => {
     };
 
     return (
-        <div className="h-1/4 flex py-4">
+        <div className="2xl:h-1/4 h-1/5 flex py-4">
             <div
                 className="flex-1 pr-8 overflow-y-scroll scrollbar scrollbar-thumb-black scrollbar-thumb-rounded-full active:scrollbar-thumb-secondary hover:scrollbar-thumb-secondary scrollbar-hide">
                 <div className="max-w-6xl mx-auto">

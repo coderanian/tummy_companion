@@ -1,6 +1,6 @@
 import {CONSTANTS} from "./constants";
 
-export function requestFactory(endpoint, body=null, from=null, to=null) {
+export function requestFactory(endpoint, body=null, from, to) {
     switch (endpoint) {
         case CONSTANTS.API.REGISTER:
             return register(endpoint, body);
@@ -39,7 +39,8 @@ async function register(url, body) {
         if(!response.ok) {
             return {success: false, msg: `Issue encountered: ${data.message}`};
         }
-        return alert("Registration successful: " + data.message);
+        return {success: true, msg: `Registration successful: ${data.message}`};
+        //alert("Registration successful: " + data.message);
     } catch (err) {
         return {success: false, msg: "Registration failed: " + err.message};
     }
@@ -65,16 +66,8 @@ async function login(url, body) {
 async function fetchDiary(url, from, to) {
     const token = localStorage.getItem("token");
     if (token) {
-        if (!from) {
-            const today = new Date();
-            from = new Date(today.setDate(today.getDate() - today.getDay()));
-        }
-        if (!to) {
-            const today = new Date();
-            to = new Date(today.setDate(today.getDate() - today.getDay() + 6));
-        }
         const response = await fetch(
-            `${url}?from=${from.toISOString()}&to=${to.toISOString()}`,
+            `${url}?from=${from}&to=${to}`,
             {
                 method: 'GET',
                 headers: {
@@ -141,13 +134,8 @@ async function updateDiaryEntry(url, body) {
 async function logout(url) {
     try {
         const response = await fetch(url, setRequestBody("POST", {}));
-        if(response.ok) {
-            localStorage.removeItem("token");
-            alert("Logout successful!");
-        } else {
-            const data = await response.json();
-            alert(data.message);
-        }
+        localStorage.removeItem("token");
+        alert("Logout successful!");
     } catch (err) {
         alert("Error logging out: " + err.message);
     }

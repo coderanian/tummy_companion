@@ -45,9 +45,7 @@ const DiaryEntry = () => {
             stool_quantity_scale, stool_mucus, stool_blood, stool_urgency, stomach_pain,
             stomach_bloating, stomach_flatulence, food, drink,
         };
-        console.log("Submitting data:", data);
         const response = await requestFactory(CONSTANTS.API.NEW_DIARY_ENTRY, data);
-        console.log("Received response:", response);
         if (response.success) {
             setFormFeedback(null);
             alert("New diary entry created for: " + timestamp);
@@ -58,7 +56,7 @@ const DiaryEntry = () => {
     };
 
     return (
-        <div className="h-1/4 flex py-4">
+        <div className="2xl:h-1/4 h-1/5 flex py-4">
             <div
                 className="flex-1 pr-8 overflow-y-scroll scrollbar scrollbar-thumb-black scrollbar-thumb-rounded-full active:scrollbar-thumb-secondary hover:scrollbar-thumb-secondary scrollbar-hide">
                 <div className="max-w-6xl mx-auto">

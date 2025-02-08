@@ -17,7 +17,7 @@ const Welcome = () => {
             <img
                 src={Person}
                 alt="Person with stomach ache."
-                className="absolute bottom-[-120px] left-[-100px] h-4/5"
+                className="absolute bottom-[-100px] left-[-50px] h-4/5"
             />
             <div className="mx-8 mt-32 w-1/2 z-10">
                 <h2 className="text-5xl">Decode your symptoms</h2>

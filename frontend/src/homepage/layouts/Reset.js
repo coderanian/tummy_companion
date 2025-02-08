@@ -51,7 +51,7 @@ const Reset = () => {
             <img
                 src={Person}
                 alt="Person with stomach ache."
-                className="absolute bottom-[-330px] left-[-50px] h-full"
+                className="absolute bottom-[-280px] left-[-50px] h-full"
             />
             <div className="flex flex-col items-center mx-8 mt-32 w-1/2 z-10 space-y-8">
                 <h1 className="text-5xl font-garet-heavy">Login</h1>
