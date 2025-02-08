@@ -32,7 +32,7 @@ const Diary = () => {
 
     const fetchUserData = async () => {
         setLoading(true);
-        const response = await requestFactory(CONSTANTS.API.DIARY, null, selectedDate[0], selectedDate[1]);
+        const response = await requestFactory(CONSTANTS.API.DIARY, null, selectedDate[0].toDateString(), selectedDate[1].toISOString());
         setLoading(false);
         if (!response.success) return;
         setEntries(response.response);
@@ -85,7 +85,7 @@ const Diary = () => {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="text-center p-8 text-gray-500">
+                                    <div className="text-center p-8">
                                         No entries for this timeframe. Please repeat your search.
                                     </div>
                                 )}
@@ -108,7 +108,7 @@ const Diary = () => {
                     <DiaryCalendar selectedDate={selectedDate} onDateChange={handleDateChange}/>
                 </div>
                 <img src={Person}
-                     className="md:absolute bottom-0 right-[80px] h-[400px]"
+                     className="md:absolute bottom-0 right-[80px] sm:h-[200px]"
                      alt="Person writing in a diary."
                 />
             </div>

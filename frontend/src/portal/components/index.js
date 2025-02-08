@@ -13,4 +13,5 @@ export {default as TextToggler} from './TextToggler';
 export {default as Checkbox} from './Checkbox';
 export {default as DiaryCalendar} from './DiaryCalendar';
 export {default as ButtonDiaryToPDF} from './ButtonDiaryToPDF';
-export {default as ChartBar} from './ChartBar';
+export {ChartLine, MoodPanel, DashboardFilter, ChartPie} from "./Dashboard";
+
